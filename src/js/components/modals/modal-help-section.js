@@ -41,10 +41,11 @@ export const ModalHelpSection = {
 
                 <hr/>
 
-                <p class="special-thanks"><small>
+                <p class="special-thanks">
+                  <small>This Spotify Audio Features tool is built by <a :href="$store.state.authors.anoesj.url">{{ $store.state.authors.anoesj.name }}</a>, for the most part during his internship at <a :href="$store.state.authors.mediamonks.url">{{ $store.state.authors.mediamonks.name }}</a>.<br/>
                   Question mark icon made by <a href="https://www.flaticon.com/authors/vaadin" title="Vaadin">Vaadin</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a><br/>
-                  Link icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-                </small></p>
+                  Link icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></small>
+                </p>
 
                 <div class="modal-buttons">
                   <button @click="$emit('close')">{{ buttonText }}</button>

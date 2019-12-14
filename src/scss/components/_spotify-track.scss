@@ -15,7 +15,7 @@
     .left {
       position: sticky;
       left: 0;
-      width: $left-width + $app-padding-x;
+      width: calc(var(--left-width) + #{$app-padding-x});
       padding: $gutter/2 $gutter $gutter/2 $app-padding-x;
       background-color: $black;
       z-index: 150;

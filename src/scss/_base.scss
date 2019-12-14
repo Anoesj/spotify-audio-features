@@ -35,26 +35,15 @@
   box-sizing: border-box;
 }
 
-html, body, #app {
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
 body {
   background-color: $black;
   color: $white;
   font-size: $fs-normal;
   font-family: Circular, Helvetica, Arial, sans-serif;
-  text-underline-offset: 0.3em;
-  text-decoration-thickness: 1px;
   line-height: 1.5;
   font-weight: $fw-normal;
+  text-underline-offset: 0.3em;
+  text-decoration-thickness: 1px;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
@@ -180,7 +169,7 @@ button {
   }
 }
 
-a, .link {
+a:not(.no-link-styling), .link {
   color: inherit;
   text-decoration: underline;
   cursor: pointer;
@@ -190,6 +179,12 @@ a, .link {
   &:focus {
     text-decoration-color: $green;
   }
+}
+
+a.no-link-styling {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 input[type="search"],

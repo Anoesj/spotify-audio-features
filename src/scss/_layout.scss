@@ -1,6 +1,28 @@
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; // keep page width 100%. if content is too wide, make only that scrollable
+  overflow-y: auto;
+}
+
 #app {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   position: relative;
-  padding: $app-padding-y/2 $app-padding-x 0;
+  padding: $app-padding-y/2 $app-padding-x $app-padding-y;
   z-index: 999;
 
   &.drag-over {
@@ -49,8 +71,7 @@
   flex-direction: column;
   justify-content: stretch;
   align-items: stretch;
-  margin: 0;
-  padding: $gutter 0 $gutter*3; // large padding-bottom so help section button can never get in the way of the page content
+  margin: $gutter 0 $gutter*2;
 
   > *:first-child {
     margin-top: 0;
@@ -69,20 +90,18 @@
   }
 }
 
-.subscript {
+.branding-wrapper {
   margin-top: auto;
-  margin-bottom: 40px;
-}
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-// TODO: FINISH
-.branding {
-  height: $gutter;
+  .branding {
+    display: contents;
 
-  svg {
-    height: 100%;
-
-    * {
-      fill: $grey-middle;
+    > * {
+      flex: 0 0 auto;
     }
   }
 }

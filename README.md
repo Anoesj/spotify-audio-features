@@ -4,15 +4,18 @@ This tool gives you a quick overview of a subset (for now) of this data by letti
 
 See in action at: [https://spotify.anoesjsadraee.com/](https://spotify.anoesjsadraee.com/)
 
-# Use cases
+## Use cases
 - Get easy insight in audio features of Spotify content.
 - Understand trends and movements by easily finding similar tracks.
 - Find recommendations by up to 5 seed tracks/artists/genres and refine results by audio features.
 
-# Contribute
+## Contribute
 - Feel free to fork and submit PRs
 - Please use `pnpm`, not `npm` (install at https://github.com/pnpm/pnpm#install)
 - `pnpm i`
 - Run `pnpm run serve` to serve app locally
 - Run `pnpm run compile` to compile app to /dist
 - To debug on production: `localStorage.setItem('debug', true)` + refresh page
+
+## License
+[MIT](./LICENSE) © MediaMonks and Anoesj Sadraee

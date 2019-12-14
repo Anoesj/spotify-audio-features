@@ -6,6 +6,7 @@ export const TopbarCollection = {
 
   template:  `<div class="topbar-collection">
                 <button
+                  class="collection-toggle"
                   :class="{ 'active': collectionOpen, 'animated': animateButton }"
                   @animationend.self="animateButton = false"
                   @click="$store.commit('toggleCollectionOpen')"

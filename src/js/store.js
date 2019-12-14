@@ -37,6 +37,16 @@ export const store = new Vuex.Store({
   state: {
     production: config.production,
     debug: config.debug,
+    authors: {
+      'mediamonks': {
+        name: 'MediaMonks',
+        url: 'https://mediamonks.com/',
+      },
+      'anoesj': {
+        name: 'Anoesj Sadraee',
+        url: 'https://anoesjsadraee.com/',
+      },
+    },
 
     setupComplete: false,
 
