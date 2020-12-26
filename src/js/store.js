@@ -1,5 +1,4 @@
-import Vue from '/node_modules/vue/dist/vue.esm.browser.js';
-import Vuex from '/node_modules/vuex/dist/vuex.esm.browser.js';
+import { createStore } from 'vuex';
 
 import { config } from './config.js';
 import { log, warn, error } from './helpers/log.js';
@@ -8,8 +7,6 @@ import { cloneObject, cloneArray } from './helpers/clone.js';
 
 // Helpers
 import { isValidUrl } from './helpers/valid-url.js';
-
-Vue.use(Vuex);
 
 // TODO: Option to share collections requires being able to get a shared collection from the URL and use that, instead of localStorage.
 // IDEA: Hitting the "Back" button on view-search does unexpected things for the end user. You would expect to go back the whatever you were looking at before you hit the Search button. That's why we should put the serialized collection in the URL and use that as a "route".
@@ -30,7 +27,7 @@ const savedCollection = localStorage.getItem(`${config.appID}_collection`),
 
 const viewParamID = 'view';
 
-export const store = new Vuex.Store({
+export const store = createStore({
 
   strict: config.production,
 

@@ -1,36 +1,38 @@
-import { mapState } from '/node_modules/vuex/dist/vuex.esm.browser.js';
+<template>
+  <table class="audio-features-overview">
+    <thead>
+      <tr class="audio-features-overview-header">
+        <th scope="row" class="left"></th>
+        <th
+          scope="row"
+          class="audio-feature-type"
+          v-for="audioFeature of $store.state.audioFeatures"
+          @click="sortByAudioFeature(audioFeature)"
+        >
+          <strong :title="audioFeature.description">{{ audioFeature.name }}<span class="sort-order" :class="audioFeaturesOverviewSortOrder">
+            <template v-if="audioFeaturesOverviewSortKey === audioFeature.id && audioFeaturesOverviewSortOrder === 'desc'">↓</template>
+            <template v-else-if="audioFeaturesOverviewSortKey === audioFeature.id && audioFeaturesOverviewSortOrder === 'asc'">↑</template>
+          </span></strong>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <spotify-track
+        v-for="trackID of sortedTrackIDs"
+        :key="trackID"
+        :trackID="trackID"
+      />
+    </tbody>
+  </table>
+</template>
 
-export const AudioFeaturesOverview = {
+<script>
+import { mapState } from 'vuex';
 
+export default {
   props: [
     'trackIDs',
   ],
-
-  template:  `<table class="audio-features-overview">
-                <thead>
-                  <tr class="audio-features-overview-header">
-                    <th scope="row" class="left"></th>
-                    <th
-                      scope="row"
-                      class="audio-feature-type"
-                      v-for="audioFeature of $store.state.audioFeatures"
-                      @click="sortByAudioFeature(audioFeature)"
-                    >
-                      <strong :title="audioFeature.description">{{ audioFeature.name }}<span class="sort-order" :class="audioFeaturesOverviewSortOrder">
-                        <template v-if="audioFeaturesOverviewSortKey === audioFeature.id && audioFeaturesOverviewSortOrder === 'desc'">↓</template>
-                        <template v-else-if="audioFeaturesOverviewSortKey === audioFeature.id && audioFeaturesOverviewSortOrder === 'asc'">↑</template>
-                      </span></strong>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <spotify-track
-                    v-for="trackID of sortedTrackIDs"
-                    :key="trackID"
-                    :trackID="trackID"
-                  />
-                </tbody>
-              </table>`,
 
   computed: {
     ...mapState([
@@ -98,5 +100,5 @@ export const AudioFeaturesOverview = {
       }
     },
   },
-
 };
+</script>

@@ -1,0 +1,47 @@
+<template>
+  <div class="view-album">
+    <div class="track-container">
+      <section class="left">
+        <img class="cover" :src="coverImage" v-if="coverImage"/>
+      </section>
+
+      <section class="right">
+        <span class="track-container-type">Album</span>
+        <h1 class="title">{{ trackContainerData.name }}</h1>
+        <p class="subtitle">By {{ $list(trackContainerData.artists.map(artist => artist.name)) }} <icon-dot/> {{ trackContainerData.tracks.total }} tracks</p>
+
+        <p v-if="tracksAmountExceedSpotifyGetTracksLimit" class="warning">This {{ trackContainerType }} contains {{ trackContainerData.tracks.total }} tracks, but the Spotify API limits us to getting data for {{ spotifyGetTracksLimit }} tracks per request. For now, this tool will only get the first {{ spotifyGetTracksLimit }} items.</p>
+
+        <audio-features-metrics :inputData="tracksAudioFeatures"/>
+      </section>
+    </div>
+
+    <audio-features-overview :trackIDs="trackIDs.slice(0, spotifyGetTracksLimit)"/>
+  </div>
+</template>
+
+<script>
+import { TrackContainer } from '../mixins/track-container.js';
+
+export default {
+  props: [
+    'id',
+  ],
+
+  mixins: [
+    TrackContainer,
+  ],
+
+  data () {
+    return {
+      trackContainerType: 'album',
+    };
+  },
+
+  computed: {
+    trackIDs () {
+      return this.trackContainerData.tracks.items.map(item => item.id);
+    },
+  },
+};
+</script>

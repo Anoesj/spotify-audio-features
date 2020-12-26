@@ -1,11 +1,13 @@
-export const TestLinks = {
+<template>
+  <div class="test-links">
+    <button class="small" @click="$store.dispatch('enterUrl', getRandom(tracks));">Test track</button>
+    <button class="small" @click="$store.dispatch('enterUrl', getRandom(playlists))">Test playlist</button>
+    <button class="small" @click="$store.dispatch('enterUrl', getRandom(albums))">Test album</button>
+  </div>
+</template>
 
-  template:  `<div class="test-links">
-                <button class="small" @click="$store.dispatch('enterUrl', getRandom(tracks));">Test track</button>
-                <button class="small" @click="$store.dispatch('enterUrl', getRandom(playlists))">Test playlist</button>
-                <button class="small" @click="$store.dispatch('enterUrl', getRandom(albums))">Test album</button>
-              </div>`,
-
+<script>
+export default {
   data () {
     return {
       tracks: [
@@ -35,5 +37,5 @@ export const TestLinks = {
       return arr[Math.floor(Math.random() * arr.length)];
     },
   },
-
 };
+</script>

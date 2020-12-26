@@ -1,7 +1,17 @@
+<template>
+  <p class="audio-feature-metric">
+    <strong class="audio-feature-type">{{ audioFeature.name }}</strong>
+    <span
+      class="average-value"
+      :style="percentageStyles"
+    >{{ percentageDisplay }}{{ percentageMeaning }}</span>
+  </p>
+</template>
+
+<script>
 import { AudioFeatureValue } from '../mixins/audio-feature-value.js';
 
-export const AudioFeatureMetric = {
-
+export default {
   props: [
     'audioFeatureID',
     'audioFeatureData',
@@ -12,13 +22,7 @@ export const AudioFeatureMetric = {
     AudioFeatureValue,
   ],
 
-  template:  `<p class="audio-feature-metric">
-                <strong class="audio-feature-type">{{ audioFeature.name }}</strong>
-                <span
-                  class="average-value"
-                  :style="percentageStyles"
-                >{{ percentageDisplay }}{{ percentageMeaning }}</span>
-              </p>`,
+  template:  ``,
 
   computed: {
     audioFeature () {
@@ -74,5 +78,5 @@ export const AudioFeatureMetric = {
       }
     },
   },
-
-}
+};
+</script>

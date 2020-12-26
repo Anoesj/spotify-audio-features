@@ -1,3 +1,77 @@
+<template>
+  <component
+    :is="viewMode === 'full' ? 'tr' : 'div'"
+    class="spotify-track"
+    :class="{
+      [viewMode]: true,
+      'placeholder': isFetched === false,
+    }"
+  >
+    <template v-if="isFetched">
+      <component
+        :is="viewMode === 'full' ? 'th' : 'div'"
+        v-bind="viewMode === 'full' ? { 'scope': 'col' } : {}"
+        class="left"
+        :class="{
+          'clickable': hasAudioPreview,
+          'playing-preview': playingAudioPreview,
+        }"
+        @click="togglePlayIfHasAudioPreview"
+        @mousedown="turnOnRecordSelectionChanges"
+      >
+        <audio
+          ref="player"
+          preload="none"
+          v-if="hasAudioPreview"
+          :src="track.trackData.preview_url"
+          style="visibilty: hidden;"
+          @ended="playingAudioPreview = false"
+        ></audio>
+
+        <icon-play v-if="hasAudioPreview && playingAudioPreview === false"/>
+        <icon-pause v-if="hasAudioPreview && playingAudioPreview === true"/>
+
+        <img class="cover" :src="coverImage" v-if="coverImage"/>
+
+        <div class="song">
+          <h3 class="title">{{ track.trackData.name }}</h3>
+          <h5 class="artists">{{ $list(track.trackData.artists.map(artist => artist.name)) }}</h5>
+        </div>
+
+        <icon-plus :added="isInCollection" @clicked="toggleInCollection" :title="isInCollection ? 'Remove from collection' : 'Add to collection'"/>
+
+        <icon-copy-link :link="track.trackData.external_urls.spotify" title="Copy Spotify link"/>
+      </component>
+
+      <td
+        v-if="viewMode === 'full'"
+        v-for="audioFeature in $store.state.audioFeatures"
+        class="audio-feature-value clickable"
+        @click="showDetails(audioFeature)"
+      >
+        <span :style="getPercentageStyles(getAudioFeatureValue(audioFeature))">{{ getAudioFeatureReadableValue(audioFeature) }}</span>
+      </td>
+    </template>
+
+    <template v-else>
+      <component
+        :is="viewMode === 'full' ? 'th' : 'div'"
+        v-bind="viewMode === 'full' ? { 'scope': 'col' } : {}"
+        class="left"
+      >
+        <loading-spinner type="small"/>
+      </component>
+
+      <td
+        v-if="viewMode === 'full'"
+        v-for="audioFeature in $store.state.audioFeatures"
+        class="audio-feature-value"
+      ></td>
+    </template>
+  </component>
+</template>
+
+<script>
 import { AudioFeatureValue } from '../mixins/audio-feature-value.js';
 import { ModalAudioFeatureValue } from './modals/modal-audio-feature-value.js';
 
@@ -5,8 +79,7 @@ import { log } from '../helpers/log.js';
 
 // FIXME: When track component is displayed multiple times, all <audio> tags will play simultaneously, causing clipping audio and bleeding ears. Solution: don't use audio tag, but a Web Audio API solution, or with Howler or something.
 
-export const SpotifyTrack = {
-
+export default {
   props: {
     'trackID': {
       type: String,
@@ -24,77 +97,6 @@ export const SpotifyTrack = {
   mixins: [
     AudioFeatureValue,
   ],
-
-  template:  `<component
-                :is="viewMode === 'full' ? 'tr' : 'div'"
-                class="spotify-track"
-                :class="{
-                  [viewMode]: true,
-                  'placeholder': isFetched === false,
-                }"
-              >
-                <template v-if="isFetched">
-                  <component
-                    :is="viewMode === 'full' ? 'th' : 'div'"
-                    v-bind="viewMode === 'full' ? { 'scope': 'col' } : {}"
-                    class="left"
-                    :class="{
-                      'clickable': hasAudioPreview,
-                      'playing-preview': playingAudioPreview,
-                    }"
-                    @click="togglePlayIfHasAudioPreview"
-                    @mousedown="turnOnRecordSelectionChanges"
-                  >
-                    <audio
-                      ref="player"
-                      preload="none"
-                      v-if="hasAudioPreview"
-                      :src="track.trackData.preview_url"
-                      style="visibilty: hidden;"
-                      @ended="playingAudioPreview = false"
-                    ></audio>
-
-                    <icon-play v-if="hasAudioPreview && playingAudioPreview === false"/>
-                    <icon-pause v-if="hasAudioPreview && playingAudioPreview === true"/>
-
-                    <img class="cover" :src="coverImage" v-if="coverImage"/>
-
-                    <div class="song">
-                      <h3 class="title">{{ track.trackData.name }}</h3>
-                      <h5 class="artists">{{ $listFormatter.format(track.trackData.artists.map(artist => artist.name)) }}</h5>
-                    </div>
-
-                    <icon-plus :added="isInCollection" @clicked="toggleInCollection" :title="isInCollection ? 'Remove from collection' : 'Add to collection'"/>
-
-                    <icon-copy-link :link="track.trackData.external_urls.spotify" title="Copy Spotify link"/>
-                  </component>
-
-                  <td
-                    v-if="viewMode === 'full'"
-                    v-for="audioFeature in $store.state.audioFeatures"
-                    class="audio-feature-value clickable"
-                    @click="showDetails(audioFeature)"
-                  >
-                    <span :style="getPercentageStyles(getAudioFeatureValue(audioFeature))">{{ getAudioFeatureReadableValue(audioFeature) }}</span>
-                  </td>
-                </template>
-
-                <template v-else>
-                  <component
-                    :is="viewMode === 'full' ? 'th' : 'div'"
-                    v-bind="viewMode === 'full' ? { 'scope': 'col' } : {}"
-                    class="left"
-                  >
-                    <loading-spinner type="small"/>
-                  </component>
-
-                  <td
-                    v-if="viewMode === 'full'"
-                    v-for="audioFeature in $store.state.audioFeatures"
-                    class="audio-feature-value"
-                  ></td>
-                </template>
-              </component>`,
 
   data () {
     return {
@@ -237,5 +239,6 @@ export const SpotifyTrack = {
       log('Recorded selection changes:', this.selectionChangesSinceMousedown);
     },
   },
-
 };
+</script>
+

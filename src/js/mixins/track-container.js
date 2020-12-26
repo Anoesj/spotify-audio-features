@@ -1,4 +1,4 @@
-import { mapState } from '/node_modules/vuex/dist/vuex.esm.browser.js';
+import { mapState } from 'vuex';
 import { audioFeatures } from '../helpers/audio-features.js';
 
 export const TrackContainer = {
